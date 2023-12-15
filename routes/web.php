@@ -21,5 +21,6 @@ Route::get('/blog', [\App\Http\Controllers\PostController::class, 'index'])->nam
 Route::get('/blog/create', [\App\Http\Controllers\PostController::class,'create'])->name('post.create');
 Route::post('/blog', [\App\Http\Controllers\PostController::class,'store'])->name('post.store');
 Route::get('/blog/{id}/show', [\App\Http\Controllers\PostController::class,'show'])->name('post.show');
-Route::post('/blog/update', [\App\Http\Controllers\PostController::class,'update'])->name('post.update');
-Route::post('/blog/delete', [\App\Http\Controllers\PostController::class,'show'])->name('post.delete');
+Route::get('/blog/{id}/edit', [\App\Http\Controllers\PostController::class,'edit'])->name('post.edit');
+Route::patch('/blog/{id}', [\App\Http\Controllers\PostController::class,'update'])->name('post.update');
+Route::delete('/blog/{id}/delete', [\App\Http\Controllers\PostController::class,'delete'])->name('post.delete');

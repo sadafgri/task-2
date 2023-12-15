@@ -25,23 +25,26 @@
                 < Back to previous page
             </a>
         </div>
-
-        <h4 class="text-left sm:text-center text-2xl sm:text-4xl md:text-5xl font-bold text-gray-900 py-10 sm:py-20">
-            This is the title of our first blog article.
-        </h4>
-
+            <p class="text-left sm:text-center text-2xl sm:text-4xl md:text-5xl font-bold text-gray-900 py-10 sm:py-20">
+                {{$posts->body}}
+            </p>
         <div class="block lg:flex flex-row">
-            <div class="basis-9/12 text-center sm:block sm:text-left">
-                <span class="text-left sm:text-center sm:text-left sm:inline block text-gray-900 pb-10 sm:pt-0 pt-0 sm:pt-10 pl-0 sm:pl-4 -mt-8 sm:-mt-0">
-                    Made by:
-                    <a
-                        href=""
-                        class="font-bold text-green-500 italic hover:text-green-400 hover:border-b-2 border-green-400 pb-3 transition-all py-20">
-                        Code With Dary
-                    </a>
-                    On 17-07-2022
-                </span>
-            </div>
+            <form action="{{route('post.edit',$posts->id)}}" method="get">
+                <div class="py-10 sm:py-20">
+                    <button type="submit" class="primary-btn inline text-base sm:text-xl bg-green-500 py-4 px-4 shadow-xl rounded-full transition-all hover:bg-green-400">
+                        edit post
+                    </button>
+                </div>
+            </form>
+             <form action="{{route('post.delete',$posts->id)}}" method="post">
+                 @csrf
+                 @method('delete')
+                 <div class="py-10 sm:py-20">
+                   <button type="submit" class="primary-btn inline text-base sm:text-xl bg-green-500 py-4 px-4 shadow-xl rounded-full transition-all hover:bg-green-400">
+                       delete post
+                   </button>
+                 </div>
+             </form>
         </div>
 
 

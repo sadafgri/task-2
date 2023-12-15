@@ -15,9 +15,8 @@ class PostController extends Controller
     }
     public function show($id)
     {
-        $category = Category::all();
-        $posts=Post::find($id)->get();
-        return view('show',['categories'=>$category , 'posts'=>$posts]);
+        $posts=Post::find($id);
+        return view('show',['posts'=>$posts]);
     }
     public function create()
     {
@@ -32,9 +31,40 @@ class PostController extends Controller
             'title'=>$request->title,
             'body'=>$request->body,
         ]);
+//        dd($post);
+        foreach ($request->category_id as $category_id){
+            $category=Category::find($category_id);
+            $post->categories()->attach($category);
+        }
+        return redirect()->route('post.index');
+    }
 
-        $post->categories()->attach($request->category_id,[ 'created_at'=>date('Y-m-d H:i:s')]);
+    public function edit($id)
+    {
+        $category = Category::all();
+        $posts=Post::find($id);
+        return view('edit',['categories'=>$category , 'posts'=>$posts]);
+    }
 
+    public function update(Request $request,$id)
+    {
+        $post=Post::find($id);
+        Post::where('id', $id)->update([
+            'title'=>$request->title,
+            'body'=>$request->body,
+            ]);
+
+        $post->categories()->detach();
+
+        foreach($request->category_id as $category_id){
+            $category=Category::find( $category_id);
+            $post->categories()->attach($category);
+        }
+        return redirect()->route('post.index');
+    }
+    public function delete($id)
+    {
+        Post::where('id',$id)->delete();
         return redirect()->route('post.index');
     }
 }
